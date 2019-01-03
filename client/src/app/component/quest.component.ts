@@ -6,13 +6,29 @@ import { Router } from "@angular/router";
 
 @Component({
     template: `
-        <ng-container *ngIf="chapterService.currentChapter">
-            <p>{{chapterService.currentChapter.text}}</p>
-            <button mat-button *ngFor="let reference of chapterService.currentChapter.references; index as i"
-                    (click)="onChapterChange(i)">{{reference.text}}</button>
-        </ng-container>
+        <p>{{chapterService.currentChapter.text}}</p>
+        <div *ngFor="let reference of chapterService.currentChapter.references; index as i">
+            <button mat-button (click)="onChapterChange(i)">> {{reference.text}}</button>
+        </div>
     `,
-    styles: [``]
+    styles: [`
+        :host {
+            display: flex;
+            flex-direction: column;
+            margin: 2.5rem;
+            text-align: justify;
+        }
+        
+        p {
+            font-size: medium;
+            white-space: pre-line;
+        }
+        
+        button {
+            font-size: medium;
+            padding-left: 0.2rem;
+        }
+    `]
 })
 export class QuestComponent implements OnInit {
 

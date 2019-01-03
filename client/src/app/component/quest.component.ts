@@ -8,25 +8,29 @@ import { Router } from "@angular/router";
     template: `
         <p>{{chapterService.currentChapter.text}}</p>
         <div *ngFor="let reference of chapterService.currentChapter.references; index as i">
-            <button mat-button (click)="onChapterChange(i)">> {{reference.text}}</button>
+            <button mat-button (click)="onChapterChange(i)">{{reference.text}}</button>
         </div>
     `,
     styles: [`
         :host {
             display: flex;
             flex-direction: column;
-            margin: 2.5rem;
+            align-items: center;
             text-align: justify;
+            margin: 4rem 2rem 2rem 2rem;
         }
         
         p {
             font-size: medium;
+            text-indent: 1.5rem;
             white-space: pre-line;
+            max-width: 60rem;
+            margin-top: 0;
+            padding-top: 0;
         }
         
         button {
             font-size: medium;
-            padding-left: 0.2rem;
         }
     `]
 })

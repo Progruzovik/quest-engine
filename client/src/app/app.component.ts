@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 
 @Component({
@@ -7,7 +6,7 @@ import { Title } from "@angular/platform-browser";
     template: `
         <div class="mat-app-background mat-typography grid">
             <mat-toolbar color="primary" class="header">
-                <h1>{{title}}</h1>
+                <h1>{{title.getTitle()}}</h1>
             </mat-toolbar>
             <div class="content">
                 <router-outlet></router-outlet>
@@ -32,11 +31,7 @@ import { Title } from "@angular/platform-browser";
         }
     `]
 })
-export class AppComponent {
+export class AppComponent  {
 
-    private title: string;
-
-    constructor(title: Title, router: Router) {
-        router.events.subscribe(() => this.title = title.getTitle());
-    }
+    constructor(readonly title: Title) { }
 }

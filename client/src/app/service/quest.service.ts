@@ -1,19 +1,35 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
 import { Quest } from "../model/quest";
-import { BaseResponse } from "../model/base-response";
+import { ListResponse } from "../model/list-response";
 import { map } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class QuestService {
 
-    private static readonly BASE_URL = "api/quests";
+    private currentIndex = 0;
+    private _quests: Quest[] = [];
 
-    constructor(private readonly http: HttpClient) { }
+    constructor(@Inject("baseApiUrl") private readonly baseUrl: string, private readonly http: HttpClient) { }
 
-    getQuests(): Observable<Quest[]> {
-        return this.http.get<BaseResponse<{ quests: Quest[] }>>(QuestService.BASE_URL)
-            .pipe(map(r => r._embedded.quests));
+    get currentQuest(): Quest {
+        return this.quests[this.currentIndex] ? this.quests[this.currentIndex] : null;
+    }
+
+    get quests(): Quest[] {
+        return this._quests;
+    }
+
+    getQuests() {
+        this.http.get<ListResponse<Quest>>(`${this.baseUrl}/api/quests`)
+            .pipe(map(r => r._embedded.data))
+            .subscribe(q => {
+                this.currentIndex = 0;
+                this._quests = q;
+            });
+    }
+
+    selectQuest(index: number) {
+        this.currentIndex = index;
     }
 }

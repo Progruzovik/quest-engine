@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef
 data class Quest(
         @Id val id: String = "",
         val title: String = "",
-        val abstract: String = "",
+        val description: String = "",
 
         @DBRef var firstChapter: Chapter? = null
 ) {

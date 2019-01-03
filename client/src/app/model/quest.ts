@@ -1,5 +1,8 @@
+import { Link } from "./link";
+
 export interface Quest {
 
     readonly title: string;
-    readonly abstract: string;
+    readonly description: string;
+    readonly _links: { firstChapter: Link };
 }

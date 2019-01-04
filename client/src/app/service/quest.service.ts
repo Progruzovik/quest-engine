@@ -1,8 +1,9 @@
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Quest } from "../model/quest";
 import { ListResponse } from "../model/list-response";
 import { map } from "rxjs/operators";
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class QuestService {
@@ -10,7 +11,7 @@ export class QuestService {
     private currentIndex = 0;
     private _quests: Quest[] = [];
 
-    constructor(@Inject("baseApiUrl") private readonly baseUrl: string, private readonly http: HttpClient) { }
+    constructor(private readonly http: HttpClient) { }
 
     get currentQuest(): Quest {
         return this.quests[this.currentIndex] ? this.quests[this.currentIndex] : null;
@@ -21,7 +22,7 @@ export class QuestService {
     }
 
     getQuests() {
-        this.http.get<ListResponse<Quest>>(`${this.baseUrl}/api/quests`)
+        this.http.get<ListResponse<Quest>>(`${environment.apiUrl}/api/quests`)
             .pipe(map(r => r._embedded.data))
             .subscribe(q => {
                 this.currentIndex = 0;

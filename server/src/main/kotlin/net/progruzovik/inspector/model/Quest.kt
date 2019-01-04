@@ -5,11 +5,11 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.DBRef
 
 data class Quest(
-        @Id val id: String = "",
-        val title: String = "",
-        val description: String = "",
+    @Id val id: String = "",
+    val title: String = "",
+    val description: String = "",
 
-        @DBRef var firstChapter: Chapter? = null
+    @DBRef var firstChapter: Chapter? = null
 ) {
 
     companion object {
